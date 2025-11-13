@@ -9,13 +9,11 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 BOT_TOKEN = os.getenv('BOT_TOKEN', 'YOUR_BOT_TOKEN_HERE')
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Обработка команды /start"""
     await update.message.reply_text(
         'Привет! Отправь мне текст или ссылку, и я создам для тебя QR-код.'
     )
 
 async def generate_qr(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Генерация QR-кода из текста или ссылки"""
     user_message = update.message.text
 
     qr = qrcode.QRCode(
@@ -38,7 +36,6 @@ async def generate_qr(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 def main():
-    """Запуск бота"""
     application = Application.builder().token(BOT_TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
