@@ -6,7 +6,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
 # Токен бота - укажите ваш токен от @BotFather
-BOT_TOKEN = os.getenv('BOT_TOKEN', '8085337425:AAFB4-QWzQItMjjgpiLLj71-Lm5XDI0GLPw')
+BOT_TOKEN = os.getenv('BOT_TOKEN', 'YOUR_BOT_TOKEN')
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Обработка команды /start"""
@@ -17,8 +17,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def generate_qr(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Генерация QR-кода из текста или ссылки"""
     user_message = update.message.text
-    
-    # Создаем QR-код
+
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -28,15 +27,11 @@ async def generate_qr(update: Update, context: ContextTypes.DEFAULT_TYPE):
     qr.add_data(user_message)
     qr.make(fit=True)
 
-    # Создаем изображение QR-кода
     img = qr.make_image(fill_color="black", back_color="white")
-    
-    # Сохраняем изображение в байтовый поток
+
     img_buffer = BytesIO()
     img.save(img_buffer, format='PNG')
     img_buffer.seek(0)
-    
-    # Отправляем изображение пользователю
     await update.message.reply_photo(
         photo=img_buffer,
         caption=f'QR-код для: {user_message}'
@@ -46,11 +41,9 @@ def main():
     """Запуск бота"""
     application = Application.builder().token(BOT_TOKEN).build()
 
-    # Обработчики команд и сообщений
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, generate_qr))
 
-    # Запускаем бота
     application.run_polling()
 
 if __name__ == '__main__':
