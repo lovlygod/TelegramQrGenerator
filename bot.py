@@ -28,6 +28,31 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         'Привет! Отправь мне текст или ссылку, и я создам для тебя QR-код.'
     )
 
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    help_text = (
+        "🤖 <b>Помощь по использованию бота QR-кодов</b>\n\n"
+        "<b>Основные команды:</b>\n"
+        "/start - Приветственное сообщение\n"
+        "/help - Это сообщение помощи\n"
+        "/qr <i>[текст]</i> - Создать QR-код с указанным текстом\n\n"
+        
+        "<b>Дополнительные возможности:</b>\n"
+        "• <code>/qr текст color:цвет1,цвет2</code> - QR-код с заданными цветами\n"
+        "• <code>/qr текст color:neon</code> - QR-код с предустановленной схемой\n"
+        "• <code>/qr текст scheme:pastel</code> - QR-код с предустановленной схемой\n"
+        "• <code>/qr текст gradient</code> - QR-код с градиентной заливкой\n\n"
+        
+        "<b>Поддерживаемые цветовые схемы:</b>\n"
+        "• neon, pastel, dark_theme, ocean\n"
+        "• sunset, forest, lava, ice, cherry, mint\n\n"
+        
+        "<b>Примеры использования:</b>\n"
+        "<code>/qr Привет, мир!</code>\n"
+        "<code>/qr https://example.com color:red,white</code>\n"
+        "<code>/qr Мой сайт color:neon gradient</code>"
+    )
+    await update.message.reply_text(help_text, parse_mode='HTML')
+
 async def generate_qr(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Извлекаем текст из команды
     if context.args:
@@ -43,7 +68,6 @@ async def generate_qr(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_message = ' '.join(update.message.text.split(' ')[1:])
     
     # Извлекаем параметры из сообщения
-    logo_path = None
     fill_color = "black"
     back_color = "white"
     color_scheme = None
@@ -53,9 +77,7 @@ async def generate_qr(update: Update, context: ContextTypes.DEFAULT_TYPE):
     filtered_message_parts = []
     
     for part in message_parts:
-        if part.startswith('logo:'):
-            logo_path = part[5:]  # Убираем 'logo:' из начала
-        elif part.startswith('color:'):
+        if part.startswith('color:'):
             colors = part[6:].split(',')
             if len(colors) >= 2:
                 # Проверяем, является ли это предустановленной схемой
@@ -81,7 +103,7 @@ async def generate_qr(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # Создаем QR-код
     qr = qrcode.QRCode(
         version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_H,  # Повышенный уровень коррекции ошибок для лучшей сканируемости с логотипом
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
         box_size=10,
         border=4,
     )
@@ -96,25 +118,6 @@ async def generate_qr(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if 'gradient' in user_message.split():
         qr_img = apply_gradient_fill(qr_img, fill_color, back_color)
     
-    # Добавляем логотип, если указан
-    if logo_path and os.path.exists(logo_path):
-        # Открываем изображение логотипа
-        logo = Image.open(logo_path)
-        
-        # Определяем размеры QR-кода
-        qr_width, qr_height = qr_img.size
-        
-        # Рассчитываем размер логотипа (максимум 1/5 от размера QR-кода для лучшей сканируемости)
-        logo_size = min(qr_width, qr_height) // 5
-        
-        # Изменяем размер логотипа
-        logo = logo.resize((logo_size, logo_size), Image.Resampling.LANCZOS)
-        
-        # Вычисляем позицию для центрирования логотипа
-        logo_pos = ((qr_width - logo_size) // 2, (qr_height - logo_size) // 2)
-        
-        # Вставляем логотип в центр QR-кода
-        qr_img.paste(logo, logo_pos)
     
     # Сохраняем изображение в байтовый поток
     img_buffer = BytesIO()
@@ -129,6 +132,7 @@ def main():
     application = Application.builder().token(BOT_TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("qr", generate_qr))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, generate_qr))
 
