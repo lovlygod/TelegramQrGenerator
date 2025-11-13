@@ -25,7 +25,8 @@ BOT_TOKEN = os.getenv('BOT_TOKEN', '8085337425:AAFB4-QWzQItMjjgpiLLj71-Lm5XDI0GL
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        'Привет! Отправь мне текст или ссылку, и я создам для тебя QR-код.'
+        'Привет! Отправь мне текст или ссылку, и я создам для тебя QR-код.' \
+        ' Используй /help для получения дополнительной информации.' \
     )
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
