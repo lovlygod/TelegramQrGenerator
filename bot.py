@@ -79,6 +79,7 @@ def main():
     application = Application.builder().token(BOT_TOKEN).build()
 
     application.add_handler(CommandHandler("start", start))
+    application.add_handler(CommandHandler("qr", generate_qr))
     application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, generate_qr))
 
     application.run_polling()
