@@ -14,23 +14,41 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def generate_qr(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_message = update.message.text
+    # Извлекаем текст из команды
+    if context.args:
+        user_message = ' '.join(context.args)
+    else:
+        user_message = update.message.text
+        # Убираем команду из сообщения
+        if user_message.startswith('/qr'):
+            user_message = user_message[4:].strip()
+    
+    # Убираем команду из сообщения, если это обычное сообщение
+    if update.message.text.startswith('/qr'):
+        user_message = ' '.join(update.message.text.split(' ')[1:])
     
     # Извлекаем параметры из сообщения
-    args = context.args if context.args else []
     logo_path = None
     fill_color = "black"
     back_color = "white"
     
-    # Парсим аргументы
-    for arg in args:
-        if arg.startswith('logo:'):
-            logo_path = arg[5:]  # Убираем 'logo:' из начала
-        elif arg.startswith('color:'):
-            colors = arg[6:].split(',')
+    # Парсим аргументы из сообщения
+    message_parts = user_message.split()
+    filtered_message_parts = []
+    
+    for part in message_parts:
+        if part.startswith('logo:'):
+            logo_path = part[5:]  # Убираем 'logo:' из начала
+        elif part.startswith('color:'):
+            colors = part[6:].split(',')
             if len(colors) >= 2:
                 fill_color = colors[0]
                 back_color = colors[1]
+        else:
+            filtered_message_parts.append(part)
+    
+    # Обновляем user_message, убирая служебные параметры
+    user_message = ' '.join(filtered_message_parts)
     
     # Создаем QR-код
     qr = qrcode.QRCode(
