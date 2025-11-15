@@ -1,45 +1,74 @@
-# Telegram-бот для генерации QR-кодов
+<div align="center">
+  <h1 style="margin-top: 24px;">💎 Telegram QR Generator by @lovlydev</h1>
 
-Этот бот позволяет пользователям генерировать QR-коды из текста или ссылок, просто отправив сообщение в чат.
+  <p style="font-size: 18px; margin-bottom: 24px;">
+    <b>Telegram-бот для генерации QR-кодов</b>
+  </p>
 
-## Функциональность
+[Report Bug](https://github.com/lovlygod/TelegramQrGenerator/issues) · [Request Feature](https://github.com/lovlygod/TelegramQrGenerator/issues)
 
-- Генерация QR-кодов из текста или ссылок
-- Автоматическая обработка текстовых сообщений
-- Отправка QR-кода в виде изображения с подписью
-- Возможность добавления логотипа в центр QR-кода
-- Поддержка различных цветовых схем QR-кодов
+</div>
 
-## Установка
+---
 
-1. Установите зависимости:
-   ```bash
-   pip install -r requirements.txt
-   ```
+## ✨ Features
 
-2. Замените `YOUR_BOT_TOKEN` в файле `bot.py` на токен вашего бота от [@BotFather](https://t.me/BotFather)
+- 🖼️ **QR Code Generation** - Generate QR codes from text or links
+- 🤖 **Automatic Message Processing** - Automatically process text messages
+- 📤 **Image Sending** - Send QR codes as images with captions
+- 🎨 **Logo Integration** - Add logos to the center of QR codes
+- 🌈 **Color Schemes** - Support for various QR code color schemes
 
-3. Запустите бота:
-   ```bash
-   python bot.py
-   ```
+## 🚀 Quick Start
 
-## Использование
+### 1. Installation
 
-1. Запустите бота
-2. Отправьте команду `/start` для начала работы
-3. Отправьте любое текстовое сообщение - бот сгенерирует QR-код для этого текста
+```bash
+git clone https://github.com/lovlygod/TelegramQrGenerator.git
+cd TelegramQrGenerator
+pip install -r requirements.txt
+```
 
-### Дополнительные возможности:
+### 2. Configuration
 
-- Для добавления логотипа в QR-код: `/qr Текст для QR-кода logo:путь/к/изображению.png`
-- Для изменения цветов: `/qr Текст для QR-кода color:красный,белый` (цвет линий, цвет фона)
+Replace `YOUR_BOT_TOKEN` in `bot.py` file with your bot token from [@BotFather](https://t.me/BotFather):
 
-## Требования
+```python
+bot = telegram.Bot(token='YOUR_BOT_TOKEN')
+```
 
-- Python 3.8+
-- Библиотеки, указанные в `requirements.txt`
+### 3. Usage
 
-## Автор
+Run the bot:
 
-Создано с использованием python-telegram-bot и qrcode[pil]
+```bash
+python bot.py
+```
+
+## Commands and Features
+
+After starting the bot:
+
+1. Send `/start` command to begin
+2. Send any text message - the bot will generate a QR code for this text
+
+### Advanced Features:
+
+- To add a logo to the QR code: `/qr Text for QR code logo:path/to/image.png`
+- To change colors: `/qr Text for QR code color:red,white` (line color, background color)
+
+## Requirements
+
+- Python >= 3.8
+- Libraries: python-telegram-bot, qrcode[pil]
+
+## License
+[MIT](LICENSE)
+
+<div align="center">
+
+### Made with ❤️ by [@lovly](https://t.me/lovlyswag)
+
+**Star ⭐ this repo if you found it useful!**
+
+</div>
