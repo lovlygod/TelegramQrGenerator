@@ -2,7 +2,7 @@
   <h1 style="margin-top: 24px;">💎 Telegram QR Generator by @lovlydev</h1>
 
   <p style="font-size: 18px; margin-bottom: 24px;">
-    <b>Telegram-бот для генерации QR-кодов</b>
+    <b>Telegram bot for generating QR codes</b>
   </p>
 
 [Report Bug](https://github.com/lovlygod/TelegramQrGenerator/issues) · [Request Feature](https://github.com/lovlygod/TelegramQrGenerator/issues)
