@@ -21,7 +21,7 @@ COLOR_SCHEMES = {
 }
 
 # Токен бота - укажите ваш токен от @BotFather
-BOT_TOKEN = os.getenv('BOT_TOKEN', '8085337425:AAFB4-QWzQItMjjgpiLLj71-Lm5XDI0GLPw')
+BOT_TOKEN = os.getenv('BOT_TOKEN', 'YOUR_BOT_TOKEN')
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
