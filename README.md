@@ -17,7 +17,7 @@
    pip install -r requirements.txt
    ```
 
-2. Замените `808537425:AAFB4-QWzQItMjjgpiLLj71-Lm5XDI0GLPw` в файле `bot.py` на токен вашего бота от [@BotFather](https://t.me/BotFather)
+2. Замените `YOUR_BOT_TOKEN` в файле `bot.py` на токен вашего бота от [@BotFather](https://t.me/BotFather)
 
 3. Запустите бота:
    ```bash
